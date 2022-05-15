@@ -15,7 +15,7 @@ const Table = () => {
                 <div key={table.id}>
                     <h2>Table {table.id}</h2>
                     <span><strong>Status: </strong>{table.status}</span>
-                    <Button as={Link} to={`/table/${table.id}`}>Show more</Button>
+                    <Button as={Link} to={`/tables/${table.id}`}>Show more</Button>
                 </div>
             )}
         </div>

@@ -1,4 +1,4 @@
-import Table from "./Tables";
+import Table from "../features/Table";
 
 const Home = () => {
     return (

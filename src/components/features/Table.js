@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom'
 
 const Table = () => {
 
-    const tables = useSelector(getAllTables);
+  const tables = useSelector(getAllTables)
 
   return (
     <>
        <div>
             <h1>All tables</h1>
-            {tables.map(table => 
-                <div key={table.id}>
-                    <h2>Table {table.id}</h2>
-                    <span><strong>Status: </strong>{table.status}</span>
-                    <Button as={Link} to={`/tables/${table.id}`}>Show more</Button>
+            {tables.map(tables => 
+                <div key={tables.id}>
+                    <h2>Table {tables.id}</h2>
+                    <span><strong>Status: </strong>{tables.status}</span>
+                    <Button as={Link} to={`/tables/${tables.id}`}>Show more</Button>
                 </div>
             )}
         </div>

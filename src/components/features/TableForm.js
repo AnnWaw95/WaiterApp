@@ -1,15 +1,15 @@
 import { Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useState } from "react";
-import { getTableId, updateTables } from "../../redux/tablesRedux";
+import { updateTables } from "../../redux/tablesRedux";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const TableForm = () => {
     const { id } = useParams();
-    const table = useSelector(state => getTableId(state, id));
+    // const table = useSelector(state => getTableId(state, id));
     const [ status, setStatus ] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const TableForm = () => {
 
     return(
         <Form onSubmit={handleSubmit}>
-        <h1>Table {table.id}</h1>
+        <h1>Table {id}</h1>
         <Form.Group className="mb-3" controlId="statusForm">
             <Form.Label>Status</Form.Label>
             <Form.Select defaultValue={status} onChange={e => setStatus(e.target.value)} size='lg'>
@@ -37,11 +37,11 @@ const TableForm = () => {
         </Form.Group>
         <Form.Group>
             <Form.Label>People</Form.Label>
-            <Form.Text onChange={e => setPeopleAmount(e.target.value)}>{table.peopleAmount}</Form.Text> / <Form.Text onChange={e => setMaxPeopleAmount(e.target.value)}>{table.maxPeopleAmount}</Form.Text>
+            <Form.Text onChange={e => setPeopleAmount(e.target.value)}>{peopleAmount}</Form.Text> / <Form.Text onChange={e => setMaxPeopleAmount(e.target.value)}>{maxPeopleAmount}</Form.Text>
         </Form.Group>
         <Form.Group>
             <Form.Label>Bill:</Form.Label>
-            <Form.Text>${table.bill}</Form.Text>
+            <Form.Text>${bill}</Form.Text>
             </Form.Group>
         <Button>Update</Button>
     </Form>

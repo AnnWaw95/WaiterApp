@@ -1,21 +1,21 @@
 import { Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { updateTables } from "../../redux/tablesRedux";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAllTables } from "../../redux/tablesRedux";
+import { Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 
-const TableForm = () => {
-    const { id } = useParams();
-    // const table = useSelector(state => getTableId(state, id));
-    const [ status, setStatus ] = useState('');
+const TableForm = ({ id,maxPeopleAmount,peopleAmount,status,bill,}) => {
+    const tables = useSelector(getAllTables);
+    const [ currentStatus, setCurrentStatus ] = useState(status);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [peopleAmount, setPeopleAmount] = useState('')
-    const [maxPeopleAmount, setMaxPeopleAmount] = useState('')
-    const [bill] = useState('')
+    const [currentPeopleAmount, setCurrentPeopleAmount] = useState(peopleAmount)
+    const [currentBill, setCurrentBill] = useState(bill)
     
     const handleSubmit = e => {
         e.preventDefault();
@@ -24,26 +24,79 @@ const TableForm = () => {
       }
 
     return(
-        <Form onSubmit={handleSubmit}>
+        <Form
+      key={tables.id}
+      className='d-flex justify-content-center my-5'
+      onSubmit={handleSubmit}
+    >
+        <Form.Group
+        as={Row}
+        style={{ maxWidth: '20rem' }}
+      >
         <h1>Table {id}</h1>
-        <Form.Group className="mb-3" controlId="statusForm">
-            <Form.Label>Status</Form.Label>
-            <Form.Select defaultValue={status} onChange={e => setStatus(e.target.value)} size='lg'>
+      
+        <Form.Label column sm='3'>
+          <b>Status:</b>
+        </Form.Label>
+        <Col sm='9' className='mb-3'>
+        <Form.Select defaultValue={currentStatus} onChange={e => setCurrentStatus(e.target.value)} size='lg'>
                 <option value="free">Free</option>
                 <option value="reserved">Reserved</option>
                 <option value="cleaning">Cleaning</option>
                 <option value="busy">Busy</option>
             </Form.Select>
-        </Form.Group>
+        </Col>
+        <Form.Label column sm='3'>
+          <b>People:</b>
+        </Form.Label>
+        <Col sm='9' className='d-flex mb-3'>
+          <Form.Control
+            className='text-center'
+            style={{ maxWidth: '3rem' }}
+            value={currentPeopleAmount}
+            onChange={(e) =>
+              setCurrentPeopleAmount(
+                e.target.value
+              )
+            }
+          />
+          <span
+            className='mx-1 my-auto'
+            style={{ fontSize: '22px' }}
+          >
+            /
+          </span>
+          <Form.Control
+            className='text-center'
+            style={{ maxWidth: '3rem' }}
+            defaultValue={maxPeopleAmount}
+          />
+        </Col>
         <Form.Group>
-            <Form.Label>People</Form.Label>
-            <Form.Text onChange={e => setPeopleAmount(e.target.value)}>{peopleAmount}</Form.Text> / <Form.Text onChange={e => setMaxPeopleAmount(e.target.value)}>{maxPeopleAmount}</Form.Text>
-        </Form.Group>
-        <Form.Group>
+            <Col sm='9' className='d-flex mb-3'>
             <Form.Label>Bill:</Form.Label>
-            <Form.Text>${bill}</Form.Text>
+            
+            <Form.Control
+            className='text-center'
+            style={{ maxWidth: '4rem' }}
+            value={currentBill}
+            onChange={(e) =>
+              setCurrentBill(
+                e.target.value
+              )
+            }
+          />
+          </Col>
             </Form.Group>
-        <Button>Update</Button>
+        <Col sm='12'>
+          <Button
+            variant='primary'
+            type='submit'
+          >
+            Update
+          </Button>
+        </Col>
+      </Form.Group>
     </Form>
     )
 }

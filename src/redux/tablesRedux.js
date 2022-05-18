@@ -1,6 +1,15 @@
+
 //selectors
 export const getAllTables = ({ tables }) => tables;
-export const getTableId = ({ tables },tableId ) => tables.find((tables) => tables.id === tableId);
+export const getTableId = ({ tables },tableId ) => 
+
+{
+  console.log(tableId);
+  console.log(tables);
+   return tables.find((tables) => {
+    console.log(tables.id); 
+    console.log(tableId);
+    return tables.id === tableId} )};
 // actions
 const createActionName = actionName => `app/tables/${actionName}`;
 const UPDATE_TABLES = createActionName('UPDATE_TABLES')

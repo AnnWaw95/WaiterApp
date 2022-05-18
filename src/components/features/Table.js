@@ -8,16 +8,17 @@ import { ListGroup } from 'react-bootstrap'
 const Table = () => {
 
   const tables = useSelector(getAllTables)
+  console.log(tables);
 
-  if (tables.length === 0)
-    return (
-      <div className='text-center my-5'>
-        <Button variant='primary' disabled>
-          <Spinner as='span' size='sm'role='status' aria-hidden='true'/>
-          Loading...
-        </Button>
-      </div>
-    );
+  // if (tables.length === 0)
+  //   return (
+  //     <div className='text-center my-5'>
+  //       <Button variant='primary' disabled>
+  //         <Spinner as='span' size='sm'role='status' aria-hidden='true'/>
+  //         Loading...
+  //       </Button>
+  // </div>
+  // );
 
     return (
       <ListGroup variant='flush'>

@@ -1,31 +1,34 @@
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { updateTables } from "../../redux/tablesRedux";
+import { getTableId, updateTables } from "../../redux/tablesRedux";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getAllTables } from "../../redux/tablesRedux";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { Col } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 
-const TableForm = ({ id,maxPeopleAmount,peopleAmount,status,bill,}) => {
-    const tables = useSelector(getAllTables);
-    const [ currentStatus, setCurrentStatus ] = useState(status);
+const TableForm = () => {
+  const {id} = useParams();  
+  const table = useSelector(state => getTableId(state, parseInt(id)));
+    console.log(table)
+    const [ currentStatus, setCurrentStatus ] = useState(table.status);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [currentPeopleAmount, setCurrentPeopleAmount] = useState(peopleAmount)
-    const [currentBill, setCurrentBill] = useState(bill)
+    const [currentPeopleAmount, setCurrentPeopleAmount] = useState(table.peopleAmount);
+    const [currentMaxPeopleAmount, setMaxCurrentPeopleAmount] = useState(table.maxPeopleAmount)
+    const [currentBill, setCurrentBill] = useState(table.bill)
     
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(updateTables({status, peopleAmount, maxPeopleAmount, bill, id }))
+        dispatch(updateTables({currentStatus, currentPeopleAmount, currentBill, currentMaxPeopleAmount }))
         navigate("/")
       }
 
     return(
         <Form
-      key={tables.id}
+      key={table.id}
       className='d-flex justify-content-center my-5'
       onSubmit={handleSubmit}
     >
@@ -33,7 +36,7 @@ const TableForm = ({ id,maxPeopleAmount,peopleAmount,status,bill,}) => {
         as={Row}
         style={{ maxWidth: '20rem' }}
       >
-        <h1>Table {id}</h1>
+        <h1>Table {table.id}</h1>
       
         <Form.Label column sm='3'>
           <b>Status:</b>
@@ -69,7 +72,7 @@ const TableForm = ({ id,maxPeopleAmount,peopleAmount,status,bill,}) => {
           <Form.Control
             className='text-center'
             style={{ maxWidth: '3rem' }}
-            defaultValue={maxPeopleAmount}
+            defaultValue={currentMaxPeopleAmount}
           />
         </Col>
         <Form.Group>
